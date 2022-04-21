@@ -6,6 +6,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class MarkdownParse {
+    String link;
+
+    public MarkdownParse(){
+        link = "";
+    }
 
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
