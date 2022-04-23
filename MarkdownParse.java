@@ -20,8 +20,8 @@ public class MarkdownParse {
             int openBracket = markdown.indexOf("[", currentIndex);
             if(openBracket == -1) break;
             int closeBracket = markdown.indexOf("]", openBracket);
-            if(markdown.substring(openBracket + 1, closeBracket).contains("image")) break;
-            if(markdown.substring(openBracket + 1, closeBracket).contains("Image")) break;
+            if(markdown.substring(openBracket + 1, closeBracket).contains("images")) break;
+            if(markdown.substring(openBracket + 1, closeBracket).contains("Images")) break;
             int openParen = markdown.indexOf("(", closeBracket);
             int closeParen = markdown.indexOf(")", openParen);
             toReturn.add(markdown.substring(openParen + 1, closeParen));
