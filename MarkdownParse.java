@@ -23,6 +23,7 @@ public class MarkdownParse {
             if(markdown.substring(openBracket + 1, closeBracket).contains("images")) break;
             if(markdown.substring(openBracket + 1, closeBracket).contains("Images")) break;
             int openParen = markdown.indexOf("(", closeBracket);
+            if(openParen == -1) break;
             int closeParen = markdown.indexOf(")", openParen);
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
