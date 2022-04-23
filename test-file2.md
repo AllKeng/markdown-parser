@@ -1,1 +1,1 @@
-[image](ss04.07.png)
+[images](ss04.07.png)
