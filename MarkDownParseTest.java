@@ -1,48 +1,64 @@
 import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-
-import javax.imageio.IIOException;
-
 import org.junit.*;
-
-public class MarkDownParseTest {
+import java.util.*;
+import java.io.IOException;
+import java.nio.file.*;
+/**
+ * This file is intended to test the functionalities of MarkDownParse.
+ */
+public class MarkdownParseTest {
+    @Test
+    public void addition() {
+        assertEquals(2, 1 + 1);
+    }
 
     @Test
-    public void addition(){
-        assertEquals(2,1+1);
+    public void testGetLinksForTestFile1() throws IOException {
+        Path fileName = Path.of("test-file.md");
+        String content = Files.readString(fileName);
+        List<String> expected = List.of("https://something.com",
+        "some-page.html");
+        assertEquals(expected,MarkdownParse.getLinks(content));
     }
 
-    @Test   
-    public void Test1() throws IOException {
-        String test= Files.readString(Path.of("test-file.md"));
-        List<String> expected = List.of("https://something.com","some-thing.html");
-        assertEquals(expected, MarkdownParse.getLinks(test));
+    @Test
+    public void testGetLinksForTestFile2() throws IOException {
+        Path fileName = Path.of("testfile2.md");
+        String content = Files.readString(fileName);
+        List<String> expected = List.of("www.myspace.com",
+        "www.facebook.com");
+        assertEquals(expected,MarkdownParse.getLinks(content));
+    }
+    @Test
+    public void testGetLinksForTestFile3() throws IOException {
+        Path fileName = Path.of("testfile3.md");
+        String content = Files.readString(fileName);
+        List<String> expected = List.of("www.speedrunners.com",
+        "www.google.com");
+        assertEquals(expected,MarkdownParse.getLinks(content));
     }
 
-    @Test   
-    public void Test2() throws IOException {
-        String test= Files.readString(Path.of("test-file1.md"));
-        List<String> expected = List.of("https://docs.google.com/document/d/1FOldotuoowWibUocRI9UkmbfTolUIUbZEYokeispdaw/edit#"
-        ,"https://learn.zybooks.com/zybook/UCSDCSE12CaoSpring2022/chapter/3/section/2");
-        assertEquals(expected, MarkdownParse.getLinks(test));
+    @Test
+    public void testGetLinksForTestFile4() throws IOException {
+        Path fileName = Path.of("try-break.md");
+        String content = Files.readString(fileName);
+        List<String> expected = List.of(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        assertEquals(expected,MarkdownParse.getLinks(content));
+    }
+    @Test 
+    public void testIfActualLink() throws IOException {
+        Path fileName = Path.of("testfarlink.md");
+        String content = Files.readString(fileName);
+        List<String> expected = new ArrayList<>();
+        assertEquals(expected, MarkdownParse.getLinks(content));
     }
 
-    @Test   
-    public void Test3() throws IOException {
-        String test= Files.readString(Path.of("test-file2.md"));
-        List<String> expected = List.of();
-        assertEquals(expected, MarkdownParse.getLinks(test));
+    @Test
+    public void aFailingTestNowSuccessful() {
+        assertEquals("https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     }
 
-    @Test   
-    public void Test4() throws IOException {
-        String test= Files.readString(Path.of("test-file3.md"));
-        List<String> expected = List.of();
-        assertEquals(expected, MarkdownParse.getLinks(test));
-    }
+    
 }
