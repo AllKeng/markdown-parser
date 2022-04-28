@@ -18,18 +18,29 @@ public class MarkdownParse {
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
             int openBracket = markdown.indexOf("[", currentIndex);
+
             if(openBracket == -1) break;
+            if(openBracket == -1) {
+                break;
+            }
             int closeBracket = markdown.indexOf("]", openBracket);
             if(markdown.substring(openBracket + 1, closeBracket).contains("images")) break;
             if(markdown.substring(openBracket + 1, closeBracket).contains("Images")) break;
             int openParen = markdown.indexOf("(", closeBracket);
             if(openParen == -1) break;
             int closeParen = markdown.indexOf(")", openParen);
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
+            String inParen = markdown.substring(openParen + 1, closeParen);
+            if(inParen.toLowerCase().endsWith(".jpg") || 
+                inParen.toLowerCase().endsWith(".png") ||
+                ! inParen.contains(".") || 
+                inParen.indexOf(".") == inParen.length()-1 
+                ) {}
+            else {
+                toReturn.add(inParen);
+            }
             currentIndex = closeParen + 1;
             System.out.println(currentIndex);
         }
-
         return toReturn;
     }
 
@@ -39,5 +50,6 @@ public class MarkdownParse {
         String content = Files.readString(fileName);
         ArrayList<String> links = getLinks(content);
 	    System.out.println(links);
+        System.out.println("Next File");
     }
 }
