@@ -6,6 +6,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class MarkdownParse {
+    String link;
+
+    public MarkdownParse(){
+        link = "";
+    }
 
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
@@ -13,11 +18,16 @@ public class MarkdownParse {
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
             int openBracket = markdown.indexOf("[", currentIndex);
+
+            if(openBracket == -1) break;
             if(openBracket == -1) {
                 break;
             }
             int closeBracket = markdown.indexOf("]", openBracket);
+            if(markdown.substring(openBracket + 1, closeBracket).contains("images")) break;
+            if(markdown.substring(openBracket + 1, closeBracket).contains("Images")) break;
             int openParen = markdown.indexOf("(", closeBracket);
+            if(openParen == -1) break;
             int closeParen = markdown.indexOf(")", openParen);
             String inParen = markdown.substring(openParen + 1, closeParen);
             if(inParen.toLowerCase().endsWith(".jpg") || 
@@ -30,6 +40,7 @@ public class MarkdownParse {
                 toReturn.add(inParen);
             }
             currentIndex = closeParen + 1;
+            System.out.println(currentIndex);
         }
         return toReturn;
     }

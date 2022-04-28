@@ -1,0 +1,1 @@
+[images](ss04.07.png)
