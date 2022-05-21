@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+/* Random change to test git commit and push on ieng6 */
 public class MarkdownParse {
     static final int nonexistent = -1;
 
@@ -23,7 +24,11 @@ public class MarkdownParse {
             }
             int closeBracket = markdown.indexOf("]", openBracket);
             int openParen = markdown.indexOf("(", closeBracket);
+            
             int closeParen = markdown.indexOf(")", openParen);
+            if(closeParen == nonexistent) {
+                break;
+            }
             String inParen = markdown.substring(openParen + 1, closeParen);
             if(inParen.toLowerCase().endsWith(".jpg") || 
                 inParen.toLowerCase().endsWith(".png") ||
