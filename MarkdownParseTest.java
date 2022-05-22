@@ -159,7 +159,7 @@ public class MarkdownParseTest {
     public void testSnippet3part4() throws IOException {
         Path fileName4 = Path.of("4snippet3num4.md");
         String content4 = Files.readString(fileName4);
-        List<String> expected4 = List.of("");
+        List<String> expected4 = new ArrayList<>();
         assertEquals(expected4,MarkdownParse.getLinks(content4));
         //fix by check for new lines 
     }

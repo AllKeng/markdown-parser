@@ -19,25 +19,41 @@ public class MarkdownParse {
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
             int openBracket = markdown.indexOf("[", currentIndex);
+            int backTick = markdown.indexOf("`",currentIndex);
+            if(backTick != nonexistent && backTick < openBracket) {
+                currentIndex = openBracket+1;
+                continue;
+            }
             if(openBracket == nonexistent) {
                 break;
             }
             int closeBracket = markdown.indexOf("]", openBracket);
+            String checkLn = markdown.substring(openBracket,
+                closeBracket).replaceFirst("\n", "");
+            if(checkLn.contains("\n")) {
+                currentIndex = closeBracket+1;
+                continue;
+            }
             int openParen = markdown.indexOf("(", closeBracket);
-            
             int closeParen = markdown.indexOf(")", openParen);
             if(closeParen == nonexistent) {
                 break;
             }
-            String inParen = markdown.substring(openParen + 1, closeParen);
-            if(inParen.toLowerCase().endsWith(".jpg") || 
-                inParen.toLowerCase().endsWith(".png") ||
-                inParen.toLowerCase().endsWith(".pdf") ||
-                ! inParen.contains(".") || 
-                inParen.indexOf(".") == inParen.length()-1 
+            String excludeBoundaryChars = markdown.substring(openParen+3,
+                closeParen-3);
+            if(excludeBoundaryChars.contains("\n")) {
+                currentIndex = closeParen+1;
+                continue;
+            }
+            String withinParen = markdown.substring(openParen+1,closeParen);
+            if(withinParen.toLowerCase().endsWith(".jpg") || 
+                withinParen.toLowerCase().endsWith(".png") ||
+                withinParen.toLowerCase().endsWith(".pdf") ||
+                ! withinParen.contains(".") || 
+                withinParen.indexOf(".") == withinParen.length()-1 
                 ) {}
             else {
-                toReturn.add(inParen);
+                toReturn.add(withinParen.trim());
             }
             currentIndex = closeParen + 1;
         }
